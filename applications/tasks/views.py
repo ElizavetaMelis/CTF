@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from applications.account.models import Profile
 from applications.tasks.models import Task
+from applications.tasks.permissions import IsSuperUser
 from applications.tasks.serializers import TaskSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -22,7 +23,7 @@ class TaskFilter(rest_framework.FilterSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, IsSuperUser]
     pagination_class = PageNumberPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filter_class = TaskFilter
@@ -35,7 +36,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             permissions = ''
         else:
-            permissions = [IsAuthenticated, ]
+            permissions = [IsAuthenticated, IsSuperUser]
         return [permission() for permission in permissions]
 
 

@@ -5,21 +5,15 @@ from applications.difficulty.models import Difficulty
 
 
 class Task(models.Model):
+    title = models.CharField(max_length=100, default=None)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, related_name='task')
     difficulty = models.ForeignKey(Difficulty, null=True, on_delete=models.SET_NULL, related_name='task')
     description = models.TextField()
     hint = models.TextField()
     level = models.TextField()
-    point = models.PositiveIntegerField()
+    point = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):
-        return str(self.category)
+        return self.title
 
-
-class TaskImage(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='image')
-    image = models.ImageField(upload_to='')
-
-    def __str__(self):
-        return str(self.task.category)

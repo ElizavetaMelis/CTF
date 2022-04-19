@@ -43,15 +43,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    photo = models.ImageField(upload_to='users_photo', blank=True, null=True)
-    age = models.IntegerField(blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    favorite = models.ManyToManyField(Task, related_name='favorite', blank=True)
-
-    def __str__(self):
-        return self.user.email
 
     def create_activation_code(self):
         import hashlib
@@ -61,5 +52,18 @@ class Profile(models.Model):
         # хранится хешированный код каждого пользователя
         activation_code = md5_object.hexdigest()
         self.activation_code = activation_code
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    photo = models.ImageField(upload_to='users_photo', blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    favorite = models.ManyToManyField(Task, related_name='favorite', blank=True)
+    point = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.email
+
+
 
 

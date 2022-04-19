@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'applications.difficulty',
     'applications.tasks',
     'applications.testing',
+    'applications.main',
 ]
 
 MIDDLEWARE = [
