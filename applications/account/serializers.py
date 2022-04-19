@@ -34,7 +34,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(fullname, email, password)
         profile = Profile.objects.create(user_id=user.id)
         send_activation_email(user.email, user.activation_code)
-        return user
+        return profile
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()

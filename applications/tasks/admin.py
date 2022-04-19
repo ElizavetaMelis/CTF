@@ -1,16 +1,10 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from applications.tasks.models import TaskImage, Task
+from applications.tasks.models import Task
 
-
-class InlineTaskImage(admin.TabularInline):
-    model = TaskImage
-    extra = 1
-    fields = ['image', ]
 
 class TaskAdminDisplay(admin.ModelAdmin):
-    inlines = [InlineTaskImage, ]
     list_display = ('category', 'difficulty', 'hint', 'description')
     search_fields = ('category', 'description')
     list_filter = ('category', 'difficulty')
